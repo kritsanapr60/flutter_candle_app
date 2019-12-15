@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>979796435048-l1au7bam11a7tvn5cccn9a4te712nnt4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.979796435048-l1au7bam11a7tvn5cccn9a4te712nnt4</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>979796435048-6gblisbqgf1qq9cdqkbn22a9ka05qnm9.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBPFwS6JqeZ2kuiZy_HyP21nSaoDHmg4pE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>979796435048</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ogp.candlefest</string>
+	<key>PROJECT_ID</key>
+	<string>ubon-candle-fest</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ubon-candle-fest.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:979796435048:ios:87394593c0c6ab33</string>
+	<key>DATABASE_URL</key>
+	<string>https://ubon-candle-fest.firebaseio.com</string>
+</dict>
+</plist>
