@@ -5,9 +5,7 @@ import 'Posts.dart';
 import 'news.dart';
 import 'list_temple.dart';
 
-
 class TemplePage extends StatefulWidget {
-
   @override
   _TemplePageState createState() => _TemplePageState();
 }
@@ -89,22 +87,22 @@ class _TemplePageState extends State<TemplePage> {
   ) {
     //แก้ UI
     return GestureDetector(
-        onTap: (){
-                      var route =  MaterialPageRoute(
-                          builder: (BuildContext context) => 
-                           List_TemplePage(
-                            avatar:avatar,
-                            address_en:address_en,
-                            address_th:address_th,
-                            formalNames_en:formalNames_en,
-                            formalNames_th:formalNames_th,
-                            histories_en:histories_en,
-                            histories_th:histories_th,
-                            website:website,
-                          ),
-                      );
-                      Navigator.of(context).push(route);
-                    },
+        onTap: () {
+          var route = MaterialPageRoute(
+            builder: (BuildContext context) => List_TemplePage(
+              avatar: avatar,
+              address_en: address_en,
+              address_th: address_th,
+              formalNames_en: formalNames_en,
+              formalNames_th: formalNames_th,
+              histories_en: histories_en,
+              histories_th: histories_th,
+              website: website,
+             
+            ),
+          );
+          Navigator.of(context).push(route);
+        },
         child: Container(
           child: Card(
             elevation: 10,

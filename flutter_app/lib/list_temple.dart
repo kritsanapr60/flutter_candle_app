@@ -11,7 +11,11 @@ class List_TemplePage extends StatefulWidget {
   String histories_en;
   String histories_th;
   String website;
-
+  int lat;
+  int lng;
+  String map;
+  String videos;
+  
   List_TemplePage({
     Key key,
     this.avatar,
@@ -22,6 +26,10 @@ class List_TemplePage extends StatefulWidget {
     this.histories_en,
     this.histories_th,
     this.website,
+    this.lat,
+    this.lng,
+    this.map,
+    this.videos
   }) : super(key: key);
 
   @override
@@ -31,10 +39,10 @@ class List_TemplePage extends StatefulWidget {
 class _TempPageState extends State<List_TemplePage> {
   @override
   Widget build(BuildContext context) {
-    return List_fo_lsitTample();
+    return List_fo_lsitTample(widget.formalNames_th);
   }
 
-  Widget List_fo_lsitTample() {
+  Widget List_fo_lsitTample(String formalNames_th) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -81,7 +89,7 @@ class _TempPageState extends State<List_TemplePage> {
         // onPressed: () => _showDetailPage(context),
         onPressed: () {
           var route = MaterialPageRoute(
-            builder: (BuildContext context) => List_MapPage(),
+            builder: (BuildContext context) => List_MapPage(formalNames_th: formalNames_th),
           );
           Navigator.of(context).push(route);
         },
