@@ -21,10 +21,32 @@ class _TemplePageState extends State<TemplePage> {
     postsRef.once().then((DataSnapshot snap) {
       var DATA = snap.value;
       var KEYS = snap.value.keys;
+      var list_image = [];
+      var list_video =[];
 
+      list_image.clear();
       postsList.clear();
+      list_video.clear();
 
       for (var key in KEYS) {
+        var KEYIMG = DATA[key]['images'].keys;
+        var KEYVIDEO = DATA[key]['videos'].keys;
+        
+        var data_img = [];
+
+        for (var im in KEYIMG){
+          data_img.add( DATA[key]['images'][im] );
+        }
+        list_image.add(data_img);
+        data_img.remove(true);
+        // video
+        var data_video =[];
+        for (var vi in KEYVIDEO){
+          data_video.add( DATA[key]['videos'][vi] );
+        }
+        list_video.add(data_video);
+        data_video.remove(true);
+
         Temples temples = new Temples(
           DATA[key]['address']['en'],
           DATA[key]['address']['th'],
@@ -35,11 +57,15 @@ class _TemplePageState extends State<TemplePage> {
           DATA[key]['histories']['th'],
           DATA[key]['temple'],
           DATA[key]['website'],
+          DATA[key]['lat'],
+          DATA[key]['lng'],
+          list_image,
+          list_video,
         );
         postsList.add(temples);
       }
       setState(() {
-        print('-----------------------------------');
+        //print('-----------------------------------');
         print('Length : $postsList');
       });
     });
@@ -54,7 +80,7 @@ class _TemplePageState extends State<TemplePage> {
         ),
         body: Container(
           child: postsList.length == 0
-              ? Text("Please Connect Internet !!")
+              ? Center(child: Text("Please Connect Internet !!"))
               : ListView.builder(
                   itemCount: postsList.length,
                   itemBuilder: (_, index) {
@@ -68,6 +94,11 @@ class _TemplePageState extends State<TemplePage> {
                       postsList[index].histories_th,
                       postsList[index].temple,
                       postsList[index].website,
+                      postsList[index].lat,
+                      postsList[index].lng,
+                      postsList[index].images[index],
+                      postsList[index].videos[index],
+
                     );
                   },
                 ),
@@ -84,6 +115,10 @@ class _TemplePageState extends State<TemplePage> {
     String histories_th,
     String temple,
     String website,
+    double lat,
+    double lng,
+    List images,
+    List videos,
   ) {
     //แก้ UI
     return GestureDetector(
@@ -98,7 +133,10 @@ class _TemplePageState extends State<TemplePage> {
               histories_en: histories_en,
               histories_th: histories_th,
               website: website,
-             
+              lat: lat,
+              lng: lng,
+              images:images,
+              videos:videos,
             ),
           );
           Navigator.of(context).push(route);

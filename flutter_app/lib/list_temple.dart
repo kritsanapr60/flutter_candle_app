@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/list_map.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 class List_TemplePage extends StatefulWidget {
   String avatar;
   String address_en;
@@ -11,11 +13,13 @@ class List_TemplePage extends StatefulWidget {
   String histories_en;
   String histories_th;
   String website;
-  int lat;
-  int lng;
+  double lat;
+  double lng;
   String map;
-  String videos;
-  
+  //String videos;
+  List images;
+  List videos;
+
   List_TemplePage({
     Key key,
     this.avatar,
@@ -28,8 +32,9 @@ class List_TemplePage extends StatefulWidget {
     this.website,
     this.lat,
     this.lng,
+    this.images,
+    this.videos,
     this.map,
-    this.videos
   }) : super(key: key);
 
   @override
@@ -39,10 +44,10 @@ class List_TemplePage extends StatefulWidget {
 class _TempPageState extends State<List_TemplePage> {
   @override
   Widget build(BuildContext context) {
-    return List_fo_lsitTample(widget.formalNames_th);
+    return List_fo_lsitTample(widget.formalNames_th,widget.lat,widget.lng);
   }
 
-  Widget List_fo_lsitTample(String formalNames_th) {
+  Widget List_fo_lsitTample(String formalNames_th,double lat,double lng) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -57,23 +62,82 @@ class _TempPageState extends State<List_TemplePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Image.network(widget.avatar),
+                      // Text(widget.lat.toString()),
+                      // Text(widget.lng.toString()),
+                      // for (var video in widget.videos) Text(video),
+                      // FadeInImage.assetNetwork(
+                      //   fadeInCurve: Curves.bounceIn,
+                      //   placeholder: widget.avatar,
+                      //   image: widget.avatar,
+                      // ),
+                      //Image.network(widget.avatar),
+                      CarouselSlider(
+                        height: 400,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.8,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        pauseAutoPlayOnTouch: Duration(seconds: 10),
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                        items:
+                            [for (var img in widget.images) (img)].map((img) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                //decoration: BoxDecoration(color: Colors.amber),
+                                child: Image.network(
+                                  img,
+                                  width: 50,
+                                  height: 20,
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
                       Divider(),
-                      Html(data:"<b>ชื่อไทย : </b>" + widget.formalNames_th),
-                      Html(data:"<b>ชื่ออังกฤษ : </b>" + widget.formalNames_en),
-                      Html(data:"<b>ที่อยู่ : </b>" +
-                          widget.address_th +
-                          "(" +
-                          widget.address_en +
-                          ")"),
-                      Html(data:"<b>ประวัติ : </b>" + widget.address_th),
-                      Html(data:"<b>History : </b>" + widget.address_en),
+                      Html(data: "<b>ชื่อไทย : </b>" + widget.formalNames_th),
+                      Html(
+                          data: "<b>ชื่ออังกฤษ : </b>" + widget.formalNames_en),
+                      Html(
+                          data: "<b>ที่อยู่ : </b>" +
+                              widget.address_th +
+                              "(" +
+                              widget.address_en +
+                              ")"),
+                      Html(data: "<b>ประวัติ : </b>" + widget.histories_th),
+                      Html(data: "<b>History : </b>" + widget.histories_en),
                       Divider(),
                       InkWell(
-                        child: Html(data:"<b>เว็บไซต์ : </b>" + widget.website),
+                        child:
+                            Column(
+                              children: <Widget>[
+                                Html(data: "<b>เว็บไซต์ : </b>" + widget.website),
+                              ],
+                            ),
                         onTap: () async {
                           if (await canLaunch(widget.website)) {
                             await launch(widget.website);
+                          }
+                        },
+                      ),
+                      InkWell(
+                        child:
+                            Column(
+                              children: <Widget>[
+                                for (var video in widget.videos) Html(data:"<b>วีดีโอ : </b>"+video),
+                              ],
+                            ),
+                        onTap: () async {
+                          if (await canLaunch(widget.videos[0])) {
+                            await launch(widget.videos[0]);
                           }
                         },
                       ),
@@ -89,7 +153,8 @@ class _TempPageState extends State<List_TemplePage> {
         // onPressed: () => _showDetailPage(context),
         onPressed: () {
           var route = MaterialPageRoute(
-            builder: (BuildContext context) => List_MapPage(formalNames_th: formalNames_th),
+            builder: (BuildContext context) =>
+                List_MapPage(formalNames_th: formalNames_th,lat:lat,lng:lng),
           );
           Navigator.of(context).push(route);
         },

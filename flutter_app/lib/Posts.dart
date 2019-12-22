@@ -1,8 +1,21 @@
+import 'dart:ffi';
+
 class  Posts {
 
   String dateDetail,dateStart,description,title;
 
-  Posts(this.dateDetail,this.dateStart,this.description,this.title);
+  Posts(this.dateDetail,
+  this.dateStart,
+  this.description,
+  this.title,);
+  
+}
+
+class Alllatlng {
+  String temple ;
+  double lat,lng;
+
+  Alllatlng(this.temple,this.lng,this.lat);
   
 }
 
@@ -34,7 +47,9 @@ class Temples {
   website
   ;
 
- 
+  List images , videos;
+
+  double lat,lng;
 
   Temples(
     this.address_en,
@@ -46,7 +61,10 @@ class Temples {
     this.histories_th,
     this.temple,
     this.website,
-
+    this.lat,
+    this.lng,
+    this.images,
+    this.videos,
   );
   
 }
@@ -56,4 +74,11 @@ class News {
 
   News(this.detail,this.image,this.title);
   
+}
+
+class Latlngmarker {
+  String temple;
+  double lat,lng;
+
+  Latlngmarker(this.temple,this.lat,this.lng);
 }

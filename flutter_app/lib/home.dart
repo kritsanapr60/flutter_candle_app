@@ -14,15 +14,36 @@ import 'suggest.dart';
 import 'Posts.dart';
 
 class MyHomePage extends StatefulWidget {
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Posts> postsList = [];
+  List<Alllatlng> alllatlng = [];
 
   void initState() {
     super.initState();
+    DatabaseReference postlatlng =
+        FirebaseDatabase.instance.reference().child("templeM");
+
+    postlatlng.once().then((DataSnapshot snap){
+      var DATA = snap.value;
+      var KEY = snap.value.keys;
+
+      alllatlng.clear();
+
+      for (var key in KEY) {
+        Alllatlng latlng = new Alllatlng(
+          DATA[key]['temple'],
+          DATA[key]['lat'],
+          DATA[key]['lng'],
+        );
+      alllatlng.add(latlng);
+      }
+    });
+
 
     DatabaseReference postsRef =
         FirebaseDatabase.instance.reference().child("announcement");
@@ -34,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       postsList.clear();
 
       for (var individualKey in KEYS) {
+
         Posts posts = new Posts(
           DATA[individualKey]['dateDetail'],
           DATA[individualKey]['dateStart'],
@@ -45,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       setState(() {
         print('oooooooooooooooooo');
-        print('Length : $postsList.length');
+        print('Length : ${postsList[0]}');
       });
     });
   }
@@ -98,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                Navigator.pop(context);
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => MapPage()));
+                    builder: (BuildContext context) => MapPage(alllatlng:alllatlng)));
               },
             ),
             ListTile(
@@ -108,15 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => NewsPage()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.comment),
-              title: Text('แนะนำ'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => SuggestPage()));
               },
             ),
             Divider(),
@@ -146,7 +159,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       postsList[index].dateDetail,
                       postsList[index].dateStart,
                       postsList[index].description,
-                      postsList[index].title);
+                      postsList[index].title,
+                    );
                 },
               ),
       ),
